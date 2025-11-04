@@ -44,9 +44,7 @@ Evo_1_clean/miravla/scripts/evo1_server_json.py
 
 Modify the checkpoint dir to where you download the model weight:
 [Modify the checkpoint dir](miravla/scripts/evo1_server_json.py#L149)
-```bash
-ckpt_dir = "/home/dell/checkpoints/Evo1_700m/evo1_metaworld/step_65000/"
-```
+
 
 #### 2. Run the simulation evaluation
 ##### Download Model Weight
