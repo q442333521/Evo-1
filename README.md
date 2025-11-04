@@ -2,20 +2,21 @@
 
 ## Installation
 1. Prepare the environment for Evo-1
-    ```bash
-    # Clone this repo
-    git clone https://github.com/DorayakiLin/Evo_1_clean.git
-    
-    
-    # Create a Conda environment
-    conda create -n Evo1 python=3.10 -y
-    conda activate Evo1
-    
-    # Install requirements
-    pip install -r requirements.txt
-    MAX_JOBS=64 pip install -v flash-attn --no-build-isolation
-    
-    ```
+```bash
+# Clone this repo
+git clone https://github.com/DorayakiLin/Evo_1_clean.git
+
+
+# Create a Conda environment
+conda create -n Evo1 python=3.10 -y
+conda activate Evo1
+
+# Install requirements
+cd miravla
+pip install -r requirements.txt
+MAX_JOBS=64 pip install -v flash-attn --no-build-isolation
+
+```
 
 ## Simulation Benchmark
 ### Meta-World Benchmark
@@ -41,8 +42,8 @@ pip install opencv-python
 
 Evo_1_clean/miravla/scripts/evo1_server_json.py
 
-Modify the checkpoint dir of the 149 line to where you download the model weight:
-[this file](miravla/scripts/evo1_server_json.py#L149)
+Modify the checkpoint dir to where you download the model weight:
+[Modify the checkpoint dir](miravla/scripts/evo1_server_json.py#L149)
 ```bash
 ckpt_dir = "/home/dell/checkpoints/Evo1_700m/evo1_metaworld/step_65000/"
 ```
@@ -52,11 +53,13 @@ ckpt_dir = "/home/dell/checkpoints/Evo1_700m/evo1_metaworld/step_65000/"
 
 
 ```bash
-
+# Start Evo-1 server (In terminal 1)
+conda activate Evo1
 cd miravla
 python scripts/evo1_server_json.py
 
 # Start Meta-World client (In terminal 2)
+conda activate metaworld 
 cd metaworld
 python mt50_evo1_client_prompt.py
 
