@@ -76,6 +76,7 @@ python mt50_evo1_client_prompt.py
 ```bash
 conda create -n libero python=3.8.13
 conda activate libero
+cd LIBERO_evaluation/
 git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
 cd LIBERO
 pip install -r requirements.txt
@@ -91,10 +92,14 @@ pip install -e .
 
 ##### 2.2 Modify config
 
-Evo_1_clean/miravla/scripts/evo1_server_json.py
-
 Modify the checkpoint dir to where you download the model weight:
-[Modify the checkpoint dir](miravla/scripts/evo1_server_json.py#L149)
+[Modify the checkpoint dir](Evo_1/scripts/Evo1_server.py#L149)
+
+Modify the server port (Optional,default 9000):
+[Modify the server port](Evo_1/scripts/Evo1_server.py#L152)
+
+Modify the client port (Optional,default 9000):
+[Modify the client port](LIBERO_evaluation/libero_client_4tasks.py#L23)
 
 #### 3 Run the simulation evaluation
 
@@ -102,7 +107,7 @@ Modify the checkpoint dir to where you download the model weight:
 # Start Evo-1 server (In terminal 1)
 conda activate Evo1
 cd Evo_1
-python scripts/evo1_server_json.py
+python scripts/Evo1_server.py
 
 # Start LIBERO client (In terminal 2)
 conda activate libero
