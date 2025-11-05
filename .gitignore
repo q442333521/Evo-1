@@ -8,3 +8,4 @@ pretraining_data_cache/
 logs/
 checkpoints/
 Evo1_training_dataset/
+LIBERO/

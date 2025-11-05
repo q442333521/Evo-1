@@ -1,6 +1,6 @@
 ## Installation
 
-1. Prepare the environment for Evo-1
+Prepare the environment for Evo-1
 
 ```bash
 # Clone this repo
@@ -75,12 +75,19 @@ python mt50_evo1_client_prompt.py
 
 ```bash
 conda create -n libero python=3.8.13
+
 conda activate libero
+
 cd LIBERO_evaluation/
+
 git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+
 cd LIBERO
+
 pip install -r requirements.txt
+
 pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+
 pip install -e .
 ```
 
