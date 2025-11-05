@@ -43,18 +43,18 @@ pip install packaging
 
 [Link to Model Weight for Meta-Wolrd](https://huggingface.co/yinxinyuchen/evo1_metaworld/tree/main/step_65000)
 
-##### 2.2 Adjust Server
+##### 2.2 Modify config
 
 Modify the checkpoint dir to where you download the model weight:
 [Modify the checkpoint dir](Evo_1/scripts/Evo1_server.py#L149)
 
-Modify the server port:
+Modify the server port (Optional,default 9000):
 [Modify the server port](Evo_1/scripts/Evo1_server.py#L152)
 
-Modify the client port:
+Modify the client port (Optional,default 9000):
 [Modify the client port](MetaWorld_evaluation/mt50_evo1_client_prompt.py#L40)
 
-#### 2. Run the simulation evaluation
+#### 3. Run the simulation evaluation
 
 ```bash
 # Start Evo-1 server (In terminal 1)
