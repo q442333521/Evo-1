@@ -225,6 +225,7 @@ def load_order_and_groups(total_envs: int):
         groups = {k: set(v) for k, v in data["groups"].items()}
         idx_to_slug = {int(k): v for k, v in data["idx_to_slug"].items()}
         print(f"[INFO] Loaded order from {ORDER_JSON_PATH} (len={len(ordered_indices)})")
+        log_write(f"[INFO] Metaworld Evaluation Begins ...")
         return ordered_indices, groups, idx_to_slug
 
   
@@ -354,8 +355,9 @@ async def eval_mt50_with_groups(server_url: str,
             s = success_counts[idx]
             t = trials_counts[idx]
             task_rate = s / max(1, t)
-            print(f"[Task {idx} {slug}] {task_prompt} finished {num_eval_episodes} episodes -> "
+            msg = (f"[Task {idx} {slug}] {task_prompt} finished {num_eval_episodes} episodes -> "
                   f"success_rate={task_rate:.3f}  (s={s}, t={t})")
+            log_write(msg)
 
     envs.close()
 
@@ -387,20 +389,18 @@ async def _amain():
     )
 
     # Pretty print
-    print("\n==== Per-task success rate ====")
-    for slug, rate in per_task.items():
-        print(f"{slug:24s}  {rate:.3f}")
+    # print("\n==== Per-task success rate ====")
+    # for slug, rate in per_task.items():
+    #     print(f"{slug:24s}  {rate:.3f}")
 
-    print("\n==== Difficulty buckets ====")
-    print(f"easy      : {per_group.get('easy', 0.0):.3f}")
-    print(f"medium    : {per_group.get('medium', 0.0):.3f}")
-    print(f"hard      : {per_group.get('hard', 0.0):.3f}")
-    print(f"very_hard : {per_group.get('very_hard', 0.0):.3f}")
+    # print("\n==== Difficulty buckets ====")
+    # print(f"easy      : {per_group.get('easy', 0.0):.3f}")
+    # print(f"medium    : {per_group.get('medium', 0.0):.3f}")
+    # print(f"hard      : {per_group.get('hard', 0.0):.3f}")
+    # print(f"very_hard : {per_group.get('very_hard', 0.0):.3f}")
 
-    print(f"\n==== Overall (average over selected tasks) ====\n{overall:.3f}")
-
-    avg = (per_group.get('easy', 0.0) + per_group.get('medium', 0.0) + per_group.get('hard', 0.0) + per_group.get('very_hard', 0.0)) / 4
-    print(f"\n==== Difficulty Average as Paper ====\n{avg:.3f}")
+    # avg = (per_group.get('easy', 0.0) + per_group.get('medium', 0.0) + per_group.get('hard', 0.0) + per_group.get('very_hard', 0.0)) / 4
+    # print(f"\n==== Overall Average as Success Rate ====\n{avg:.3f}")
 
     # log
     log_write(f"\n==== Evaluation Log ====\nLog file: {LOG_PATH}")
@@ -422,8 +422,7 @@ async def _amain():
     log_write(f"hard      : {per_group.get('hard', 0.0):.3f}")
     log_write(f"very_hard : {per_group.get('very_hard', 0.0):.3f}")
 
-    log_write(f"\n==== Overall (average over selected tasks) ====\n{overall:.3f}")
-    log_write(f"\n==== Difficulty Average as Paper ====\n{avg:.3f}")
+    log_write(f"\n==== Overall Average as Success Rate ====\n{avg:.3f}")
 
 if __name__ == "__main__":
     asyncio.run(_amain())

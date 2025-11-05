@@ -60,7 +60,7 @@ Modify the client port (Optional,default 9000):
 # Start Evo-1 server (In terminal 1)
 conda activate Evo1
 cd Evo_1
-python scripts/evo1_server.py
+python scripts/Evo1_server.py
 
 # Start Meta-World client (In terminal 2)
 conda activate metaworld
