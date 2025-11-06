@@ -1,39 +1,42 @@
 
 # Evo-1: Lightweight Vision-Language-Action Model with Preserved Semantic Alignment
 
-[![Paper](https://img.shields.io/badge/arXiv-Paper-red)](🔗 _arxiv_link_here_)  
+[![📄 Paper](https://img.shields.io/badge/arXiv-Paper-red)]()  
 
+[![🤗 HuggingFace Models](https://img.shields.io/badge/HuggingFace-Models-yellow)](https://huggingface.co/MINT-SJTU/Evo-1/tree/main)  
 
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Models-yellow)](🔗 [Checkpoints](https://huggingface.co/MINT-SJTU/Evo-1/tree/main))  
-
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](🔗 [MetaWorld Dataset](https://huggingface.co/datasets/MINT-SJTU/Evo-1_MetaWorld))  
-
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![📦 Dataset](https://img.shields.io/badge/HuggingFace-Dataset_MetaWorld-orange)](https://huggingface.co/datasets/MINT-SJTU/Evo1_MetaWorld/tree/main)  
 
 
 
 
 
-## 📰 News
+## 📰 News  
 
-- [2025-11-06] Released Meta-World & LIBERO evaluation script  
-- [2025-11-06] Upload model weights to HuggingFace
-- [2025-11-06] Released Offical Code 
+- 🗓️ **2025-11-06** — Released Meta-World & LIBERO evaluation scripts  
+- 🗓️ **2025-11-06** — Uploaded model weights to HuggingFace  
+- 🗓️ **2025-11-06** — Released official code  
 
-## ✅ To-Do List
 
-- ⬜ Release RoboTwin evaluation  script and checkpoints
+
+
+## ✅ To-Do List  
+
+- ⬜ Release inference script in xarm6 
+- ⬜ Add Evo-1 to the LeRobot framework for SO100   
 - ⬜ Release results of all 50 RoboTwin tasks
-- ⬜ Adding Evo-1 to lerobot framework for so100
+- ⬜ Release RoboTwin evaluation script  
+  
 
 
-## Installation
+
+## ⚙️ Installation
 
 Prepare the environment for Evo-1
 
 ```bash
 # Clone this repo
-git clone https://github.com/DorayakiLin/Evo_1_clean.git
+git clone https://github.com/MINT-SJTU/Evo-1.git
 
 # Create a Conda environment
 conda create -n Evo1 python=3.10 -y
@@ -47,11 +50,11 @@ pip install -r requirements.txt
 MAX_JOBS=64 pip install -v flash-attn --no-build-isolation
 ```
 
-## Simulation Benchmark
+##  Simulation Benchmark
 
-### Meta-World Benchmark
+### 🧪 Meta-World Benchmark
 
-#### 1 Prepare the environment for Meta-World
+### 1️⃣ Prepare the environment for Meta-World
 
 ```bash
 conda create -n metaworld python=3.10 -y
@@ -63,19 +66,21 @@ pip install opencv-python
 pip install packaging
 ```
 
-#### 2 Model Preparation
+### 2️⃣ Model Preparation
 
-##### 2.1 Download Model Weight
+### 📥 2.1 Download Model Weight
 
-[Link to Model Weight for Meta-World](https://huggingface.co/MINT-SJTU/Evo-1/tree/main/Evo1_Simulation_Benchmark_Checkpoints/MetaWorld/Evo1_MetaWorld_checkpoint)
+[Meta-World Evaluation Checkpoint](https://huggingface.co/MINT-SJTU/Evo-1/tree/main/Evo1_Simulation_Benchmark_Checkpoints/MetaWorld/Evo1_MetaWorld_checkpoint)
 
-##### 2.2 Modify config
+
+### ✏️ 2.2 Modify config
 
 Modify checkpoint dir: [Evo1_server.py#L149](Evo_1/scripts/Evo1_server.py#L149)  
 (Optional) Modify server port: [Evo1_server.py#L152](Evo_1/scripts/Evo1_server.py#L152)  
 (Optional) Modify client port: [mt50_evo1_client_prompt.py#L40](MetaWorld_evaluation/mt50_evo1_client_prompt.py#L40)
 
-#### 3 Run the simulation evaluation
+
+### 3️⃣ Run Meta-World Evaluation
 
 ```bash
 # Terminal 1
@@ -95,9 +100,11 @@ cd MetaWorld_evaluation
 python mt50_evo1_client_prompt.py
 ```
 
-### LIBERO Benchmark
+---
 
-#### 1 Prepare the environment for LIBERO
+### 🧪 LIBERO Benchmark
+
+### 1️⃣ Prepare the environment for LIBERO
 
 ```bash
 conda create -n libero python=3.8.13 -y
@@ -119,20 +126,22 @@ pip install -e .
 pip install websockets
 ```
 
-#### 2 Model Preparation
+### 2️⃣ Model Preparation
 
-##### 2.1 Download Model Weight
+### 📥 2.1 Download Model Weight
 
-[Link to Model Weight for LIBERO](https://huggingface.co/liujiting/evo1_libero/tree/main)
+[LIBERO Evaluation Checkpoint](https://huggingface.co/MINT-SJTU/Evo-1/tree/main/Evo1_Simulation_Benchmark_Checkpoints/LIBERO/Evo1_LIBERO_checkpoint)
 
-##### 2.2 Modify config
 
+
+### ✏️ 2.2 Modify config
 Modify checkpoint dir: [Evo1_server.py#L149](Evo_1/scripts/Evo1_server.py#L149)  
+Modify ckpt name: [libero_client_4tasks.py#L24](LIBERO_evaluation/libero_client_4tasks.py#L24)  
 (Optional) Modify server port: [Evo1_server.py#L152](Evo_1/scripts/Evo1_server.py#L152)  
 (Optional) Modify client port: [libero_client_4tasks.py#L23](LIBERO_evaluation/libero_client_4tasks.py#L23)  
-Modify ckpt name: [libero_client_4tasks.py#L24](LIBERO_evaluation/libero_client_4tasks.py#L24)
 
-#### 3 Run the simulation evaluation
+
+#### 3️⃣ Run LIBERO Evaluation
 
 ```bash
 # Terminal 1
@@ -152,65 +161,84 @@ cd LIBERO_evaluation
 python libero_client_4tasks.py
 ```
 
-## Training on Your Own Dataset
+## 🧠 Training on Your Own Dataset
 
-We support lerobot v2.1 format, please convert your data to this format.
+We support **lerobot v2.1** format, please convert your data to this format.
 
 We use MetaWorld Dataset here as an example.
 
+### 📥 2.1 Download Dataset
+
 ```bash
+mkdir Evo1_training_dataset/
+
 cd Evo1_training_dataset/
 
-GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/datasets/DorayakiLin/metaworld_dataset_v2.1
+GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/datasets/MINT-SJTU/Evo1_MetaWorld
 
-cd metaworld_dataset_v2.1/
+cd Evo1_MetaWorld/
 
 git lfs pull
 ```
 
-#### 2 Modify config
+### ✏️ 2.2 Modify config
 
-#### 2.1 Modify config.yaml
+### ✏️ 2.2.1 Modify config.yaml
 
-You need to modify the [config.yaml](Evo_1_clean/Evo_1/dataset/config.yaml)
+You need to modify the [config.yaml](Evo_1/dataset/config.yaml)
 
-#### 2.2 Set the cache path
+This is used to set the dataset path and the camera mapping.
 
-You need to change the [cache_dir](Evo_1/dataset/lerobot_dataset_pretrain_mp.py)
+### ✏️ 2.2 Set the cache path
 
-#### 3 Start Training
+You need to change the [cache_dir](Evo_1/dataset/lerobot_dataset_pretrain_mp.py#L174)
 
-We only train the integration module and action expert in stage 1.
+Set the cache path so the dataset can be loaded from .pkl files next time for faster loading.
 
-If you are training with multiple GPU, set --num_processes to the GPU number
+### 🚀 3 Start Training
 
-You need to change the --run_name,--save_dir,--resume_path base on your own config.
-### Setup deepspeed
+We use the two-stage training paradigm.
+
+### 🚀 3.1 Setup deepspeed
 ```bash
 accelerate config     
 ```
-You can check this [setup guide](Evo_1_clean/deepspeed_steup_example.txt)
+You can check this [setup guide](deepspeed_steup_example.txt)
 
 
-### Stage 1
+### 🚀 3.2 Stage 1
 
-```bash
-conda activate Evo1
+We only train the integration module and action expert in stage 1.   
 
-cd Evo_1/
-
-accelerate launch --num_processes 1 --num_machines 1 --deepspeed_config_file ds_config.json scripts/train.py --run_name Evo1_metaworld_dataset_v2.1_stage1 --action_head flowmatching --use_augmentation --lr 1e-5 --dropout 0.2 --weight_decay 1e-3 --batch_size 16 --image_size 448 --max_steps 5000 --log_interval 10 --ckpt_interval 2500 --warmup_steps 1000 --grad_clip_norm 1.0 --num_layers 8 --horizon 50 --finetune_action_head --disable_wandb --vlm_name OpenGVLab/InternVL3-1B --dataset_config_path dataset/config.yaml --per_action_dim 24 --state_dim 24 --save_dir /your/path/checkpoints/stage1
-```
-
-### Stage 2
+If you are training with multiple GPU, set --num_processes to the GPU number.  
+You need to change the --run_name,--save_dir,--resume_path base on your own config.
 
 ```bash
 conda activate Evo1
 
 cd Evo_1/
 
-accelerate launch --num_processes 1 --num_machines 1 --deepspeed_config_file ds_config.json scripts/train.py --run_name Evo1_metaworld_dataset_v2.1_stage2 --action_head flowmatching --use_augmentation --lr 1e-5 --dropout 0.2 --weight_decay 1e-3 --batch_size 16 --image_size 448 --max_steps 5000 --log_interval 10 --ckpt_interval 2500 --warmup_steps 1000 --grad_clip_norm 1.0 --num_layers 8 --horizon 50 --finetune_vlm --finetune_action_head --disable_wandb --vlm_name OpenGVLab/InternVL3-1B --dataset_config_path dataset/config.yaml --per_action_dim 24 --state_dim 24 --save_dir /your/path/checkpoints/stage2 --resume --resume_pretrain --resume_path /your/path/checkpoints/stage1/step_5000
+accelerate launch --num_processes 1 --num_machines 1 --deepspeed_config_file ds_config.json scripts/train.py --run_name Evo1_metaworld_stage1 --action_head flowmatching --use_augmentation --lr 1e-5 --dropout 0.2 --weight_decay 1e-3 --batch_size 16 --image_size 448 --max_steps 5000 --log_interval 10 --ckpt_interval 2500 --warmup_steps 1000 --grad_clip_norm 1.0 --num_layers 8 --horizon 50 --finetune_action_head --disable_wandb --vlm_name OpenGVLab/InternVL3-1B --dataset_config_path dataset/config.yaml --per_action_dim 24 --state_dim 24 --save_dir /your/path/checkpoints/stage1
 ```
+
+### 🚀 3.3 Stage 2
+We perform Full-scale training in stage 2.   
+
+```bash
+conda activate Evo1
+
+cd Evo_1/
+
+accelerate launch --num_processes 1 --num_machines 1 --deepspeed_config_file ds_config.json scripts/train.py --run_name Evo1_metaworld_stage2 --action_head flowmatching --use_augmentation --lr 1e-5 --dropout 0.2 --weight_decay 1e-3 --batch_size 16 --image_size 448 --max_steps 80000 --log_interval 10 --ckpt_interval 2500 --warmup_steps 1000 --grad_clip_norm 1.0 --num_layers 8 --horizon 50 --finetune_vlm --finetune_action_head --disable_wandb --vlm_name OpenGVLab/InternVL3-1B --dataset_config_path dataset/config.yaml --per_action_dim 24 --state_dim 24 --save_dir /your/path/checkpoints/stage2 --resume --resume_pretrain --resume_path /your/path/checkpoints/stage1/step_5000
+```
+
+### 🚀 3.4 (Optional) Resume
+If you want to resume the training process, you can use the following command (we use stage 2 as an example):
+
+```bash
+accelerate launch --num_processes 1 --num_machines 1 --deepspeed_config_file ds_config.json scripts/train.py --run_name Your_own_name --action_head flowmatching --use_augmentation --lr 1e-5 --dropout 0.2 --weight_decay 1e-3 --batch_size 16 --image_size 448 --max_steps 80000 --log_interval 10 --ckpt_interval 2500 --warmup_steps 1000 --grad_clip_norm 1.0 --num_layers 8 --horizon 50 --finetune_vlm --finetune_action_head --disable_wandb --vlm_name OpenGVLab/InternVL3-1B --dataset_config_path dataset/config.yaml --per_action_dim 24 --state_dim 24 --save_dir /your/path/to/save/the/checkpoints/ --resume  --resume_path /the/checkpoint/path/you/want/to/resume/from/step_20000
+```
+
 
 ## 📚 Citatation
 
