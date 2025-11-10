@@ -12,7 +12,7 @@
 
 
 ## 📰 News  
-
+- 🗓️ **2025-11-10** — Released inference script in xarm6
 - 🗓️ **2025-11-06** — Released Meta-World & LIBERO evaluation scripts  
 - 🗓️ **2025-11-06** — Uploaded model weights to HuggingFace  
 - 🗓️ **2025-11-06** — Released official code  
@@ -22,7 +22,7 @@
 
 ## ✅ To-Do List  
 
-- ⬜ Release inference script in xarm6 
+- ✅ Release inference script in xarm6 
 - ⬜ Add Evo-1 to the LeRobot framework for SO100   
 - ⬜ Release results of all 50 RoboTwin tasks
 - ⬜ Release RoboTwin evaluation script  
