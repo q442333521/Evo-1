@@ -399,7 +399,7 @@ async def _amain():
     # print(f"hard      : {per_group.get('hard', 0.0):.3f}")
     # print(f"very_hard : {per_group.get('very_hard', 0.0):.3f}")
 
-    # avg = (per_group.get('easy', 0.0) + per_group.get('medium', 0.0) + per_group.get('hard', 0.0) + per_group.get('very_hard', 0.0)) / 4
+    avg = (per_group.get('easy', 0.0) + per_group.get('medium', 0.0) + per_group.get('hard', 0.0) + per_group.get('very_hard', 0.0)) / 4
     # print(f"\n==== Overall Average as Success Rate ====\n{avg:.3f}")
 
     # log
