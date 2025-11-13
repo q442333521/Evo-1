@@ -205,7 +205,7 @@ We use the two-stage training paradigm.
 ```bash
 accelerate config     
 ```
-You can check this [setup guide](deepspeed_steup_example.txt)
+You can check this [setup guide](deepspeed_setup_example.txt)
 
 
 ### 🚀 3.2 Stage 1
