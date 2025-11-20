@@ -1,0 +1,473 @@
+<mxfile host="app.diagrams.net" modified="2025-11-20T04:10:00.000Z" agent="Claude AI" version="22.0.0">
+  <diagram name="两阶段训练策略" id="training-strategy">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="Evo-1 两阶段训练策略" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 对比标题 -->
+        <mxCell id="comparison-title" value="传统端到端训练 vs 两阶段训练对比" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="80" width="1400" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- 左侧：传统端到端训练 -->
+        <mxCell id="traditional-bg" value="❌ 传统端到端训练 (不推荐)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontSize=16;fontStyle=1;opacity=60;" vertex="1" parent="1">
+          <mxGeometry x="100" y="130" width="500" height="400" as="geometry"/>
+        </mxCell>
+
+        <!-- 传统方法流程 -->
+        <mxCell id="trad-start" value="开始训练" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="180" width="360" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="trad-vlm-init" value="VLM 预训练模型&#xa;(InternVL3-1B)&#xa;语义理解能力强" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="170" y="240" width="360" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="trad-train" value="直接端到端训练&#xa;(80000 步)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="320" width="360" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="trad-problem" value="⚠️ 问题：VLM 语义退化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="390" width="360" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="trad-result" value="VLM 从理解"抓取"的含义&#xa;变成只记住特定模式&#xa;泛化能力差，过拟合" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="450" width="360" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- 右侧：两阶段训练 -->
+        <mxCell id="twostage-bg" value="✅ 两阶段训练 (Evo-1 采用)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="130" width="800" height="400" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 1 -->
+        <mxCell id="stage1-title" value="Stage 1: 冻结 VLM，训练动作头 (5000步)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="170" width="350" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage1-vlm" value="VLM (InternVL3-1B)&#xa;🔒 冻结 (requires_grad=False)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="210" width="310" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage1-action" value="Action Head + Integration&#xa;✅ 训练 (requires_grad=True)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="280" width="310" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage1-goal" value="目标：让动作头学会利用&#xa;VLM 的语义特征" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="325" width="310" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 箭头 Stage 1 -> Stage 2 -->
+        <mxCell id="arrow-stage" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;strokeColor=#00CC00;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1090" y="260" as="sourcePoint"/>
+            <mxPoint x="1140" y="260" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-stage-label" value="加载检查点" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="235" width="80" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 2 -->
+        <mxCell id="stage2-title" value="Stage 2: 全模型微调 (80000步)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="170" width="340" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage2-vlm" value="VLM (InternVL3-1B)&#xa;✅ 微调 (requires_grad=True)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="210" width="300" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage2-action" value="Action Head + Integration&#xa;✅ 训练 (requires_grad=True)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="280" width="300" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage2-goal" value="目标：端到端优化&#xa;VLM 适应机器人任务" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="325" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 优势说明 -->
+        <mxCell id="advantage-title" value="✅ 两阶段训练的优势" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="730" y="370" width="740" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="adv1" value="1. Stage 1 让动作头"依赖"VLM 的语义输出" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="750" y="400" width="720" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="adv2" value="2. Stage 2 微调时，VLM 不会完全退化（因为动作头已经依赖其语义）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="750" y="425" width="720" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="adv3" value="3. 保持了语言理解能力，同时优化了整体性能" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="750" y="450" width="720" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="adv4" value="4. 泛化能力强，可处理新的语言指令和场景变化" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="750" y="475" width="720" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 1 详细流程 -->
+        <mxCell id="stage1-detail-title" value="Stage 1 详细训练流程" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="570" width="700" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage1-detail-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="100" y="620" width="700" height="500" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 1 组件 -->
+        <mxCell id="s1-data" value="训练数据" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="660" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1-data-detail" value="观测 (图像+文本+状态) + 真实动作" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="140" y="672" width="280" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-vlm-box" value="VLM Encoder (冻结)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="720" width="280" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1-vlm-detail" value="for p in vlm.parameters():&#xa;    p.requires_grad = False" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="140" y="735" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-fused" value="Fused Tokens (固定)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="800" width="280" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-action-box" value="Action Head (训练)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="860" width="280" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1-action-detail" value="Flow Matching Transformer&#xa;学习从 fused_tokens 生成动作" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="140" y="875" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-loss" value="Loss 计算" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="940" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1-loss-formula" value="MSE(pred_velocity, action_gt - noise)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="140" y="952" width="280" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-update" value="更新参数 (仅 Action Head)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="1000" width="280" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-save" value="保存检查点&#xa;checkpoints/stage1/step_5000/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="140" y="1060" width="280" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 1 超参数 -->
+        <mxCell id="s1-params-title" value="超参数配置" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="660" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param1" value="learning_rate: 1e-5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="500" y="695" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param2" value="batch_size: 16" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="500" y="720" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param3" value="max_steps: 5000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="500" y="745" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param4" value="warmup_steps: 1000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="500" y="770" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param5" value="grad_clip_norm: 1.0" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="500" y="795" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param6" value="finetune_vlm: False" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;fontColor=#CC0000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="820" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-param7" value="finetune_action_head: True" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;fontColor=#006600;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="845" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 1 命令 -->
+        <mxCell id="s1-cmd-title" value="训练命令" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="890" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1-cmd" value="accelerate launch \&#xa;  --num_processes 1 \&#xa;  scripts/train.py \&#xa;  --run_name Evo1_stage1 \&#xa;  --max_steps 5000 \&#xa;  --finetune_action_head \&#xa;  --save_dir ./ckpt/stage1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;fontFamily=Courier New;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="490" y="925" width="270" height="185" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 2 详细流程 -->
+        <mxCell id="stage2-detail-title" value="Stage 2 详细训练流程" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="900" y="570" width="600" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stage2-detail-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="900" y="620" width="600" height="500" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 2 组件 -->
+        <mxCell id="s2-load" value="加载 Stage 1 检查点" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="660" width="520" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2-load-detail" value="model.load_state_dict(torch.load(&quot;stage1/step_5000&quot;))" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="940" y="672" width="520" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-unfreeze" value="解冻所有参数" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="720" width="520" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2-unfreeze-detail" value="for p in model.parameters():&#xa;    p.requires_grad = True" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="940" y="735" width="520" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-train" value="端到端训练 (80000 步)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="800" width="520" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2-train-detail" value="VLM 和 Action Head 同时训练&#xa;VLM 适应机器人任务，但保持语义理解" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="940" y="815" width="520" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-checkpoint" value="定期保存检查点" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="880" width="520" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2-checkpoint-detail" value="每 2500 步保存: step_2500, step_5000, ..." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="940" y="892" width="520" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 2 超参数 -->
+        <mxCell id="s2-params-title" value="超参数配置" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="940" width="240" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param1" value="learning_rate: 1e-5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="960" y="975" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param2" value="batch_size: 16" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="960" y="995" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param3" value="max_steps: 80000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="960" y="1015" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param4" value="warmup_steps: 1000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="960" y="1035" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param5" value="grad_clip_norm: 1.0" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="960" y="1055" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param6" value="finetune_vlm: True" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;fontColor=#006600;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="1075" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-param7" value="finetune_action_head: True" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;fontColor=#006600;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="1095" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Stage 2 命令 -->
+        <mxCell id="s2-cmd-title" value="训练命令" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="940" width="240" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2-cmd" value="accelerate launch \&#xa;  --num_processes 1 \&#xa;  scripts/train.py \&#xa;  --run_name Evo1_stage2 \&#xa;  --max_steps 80000 \&#xa;  --finetune_vlm \&#xa;  --finetune_action_head \&#xa;  --resume --resume_pretrain \&#xa;  --resume_path ./ckpt/stage1/step_5000 \&#xa;  --save_dir ./ckpt/stage2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;fontFamily=Courier New;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="975" width="230" height="145" as="geometry"/>
+        </mxCell>
+
+        <!-- 性能对比 -->
+        <mxCell id="perf-title" value="性能对比：两阶段 vs 端到端" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="1200" width="1400" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- 对比表格 -->
+        <mxCell id="table-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1260" width="1000" height="280" as="geometry"/>
+        </mxCell>
+
+        <!-- 表头 -->
+        <mxCell id="table-header1" value="指标" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1260" width="300" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="table-header2" value="端到端训练" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1260" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="table-header3" value="两阶段训练 (Evo-1)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1260" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 行1: Meta-World -->
+        <mxCell id="row1-1" value="Meta-World 成功率" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1300" width="300" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row1-2" value="~65%" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1300" width="350" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row1-3" value="80.6% ✅" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1300" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 行2: 语义理解 -->
+        <mxCell id="row2-1" value="语言理解能力" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1340" width="300" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row2-2" value="严重退化 ❌" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontColor=#CC0000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1340" width="350" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row2-3" value="保持良好 ✅" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1340" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 行3: 泛化能力 -->
+        <mxCell id="row3-1" value="新指令泛化" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1380" width="300" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row3-2" value="差 ❌" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontColor=#CC0000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1380" width="350" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row3-3" value="优秀 ✅" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1380" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 行4: 训练时间 -->
+        <mxCell id="row4-1" value="总训练步数" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1420" width="300" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row4-2" value="80000 步" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1420" width="350" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row4-3" value="85000 步 (5K+80K)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1420" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 行5: 过拟合风险 -->
+        <mxCell id="row5-1" value="过拟合风险" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1460" width="300" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row5-2" value="高 ❌" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontColor=#CC0000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1460" width="350" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row5-3" value="低 ✅" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1460" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 行6: 训练稳定性 -->
+        <mxCell id="row6-1" value="训练稳定性" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1500" width="300" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row6-2" value="不稳定" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1500" width="350" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="row6-3" value="稳定 ✅" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1500" width="350" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 连接箭头 -->
+        <mxCell id="trad-arrow1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="trad-start" target="trad-vlm-init">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint"/>
+            <mxPoint x="450" y="350" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="trad-arrow2" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="trad-vlm-init" target="trad-train">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint"/>
+            <mxPoint x="450" y="350" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="trad-arrow3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#CC0000;" edge="1" parent="1" source="trad-train" target="trad-problem">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint"/>
+            <mxPoint x="450" y="350" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="trad-arrow4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#CC0000;" edge="1" parent="1" source="trad-problem" target="trad-result">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="500" as="sourcePoint"/>
+            <mxPoint x="450" y="450" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Stage 1 内部连接 -->
+        <mxCell id="s1-arrow1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s1-data" target="s1-vlm-box">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="800" as="sourcePoint"/>
+            <mxPoint x="450" y="750" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s1-arrow2" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s1-vlm-box" target="s1-fused">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="800" as="sourcePoint"/>
+            <mxPoint x="450" y="750" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s1-arrow3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s1-fused" target="s1-action-box">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="900" as="sourcePoint"/>
+            <mxPoint x="450" y="850" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s1-arrow4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s1-action-box" target="s1-loss">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="980" as="sourcePoint"/>
+            <mxPoint x="450" y="930" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s1-arrow5" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s1-loss" target="s1-update">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="1050" as="sourcePoint"/>
+            <mxPoint x="450" y="1000" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s1-arrow6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s1-update" target="s1-save">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="1100" as="sourcePoint"/>
+            <mxPoint x="450" y="1050" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Stage 2 内部连接 -->
+        <mxCell id="s2-arrow1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s2-load" target="s2-unfreeze">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="750" as="sourcePoint"/>
+            <mxPoint x="1150" y="700" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s2-arrow2" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s2-unfreeze" target="s2-train">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="820" as="sourcePoint"/>
+            <mxPoint x="1150" y="770" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="s2-arrow3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="s2-train" target="s2-checkpoint">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="900" as="sourcePoint"/>
+            <mxPoint x="1150" y="850" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

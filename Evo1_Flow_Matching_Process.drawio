@@ -1,0 +1,367 @@
+<mxfile host="app.diagrams.net" modified="2025-11-20T04:10:00.000Z" agent="Claude AI" version="22.0.0">
+  <diagram name="Flow Matching 推理过程" id="flow-matching">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="Flow Matching 推理过程 (N=50 步迭代)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 初始化 -->
+        <mxCell id="init-bg" value="初始化 (i=0)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="400" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="init-random" value="随机噪声生成" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="140" width="340" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="init-formula" value="action = random(-1, 1) × action_mask&#xa;shape: [B, 50, 24]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="130" y="150" width="340" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="init-mask" value="应用动作掩码" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="200" width="340" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="init-mask-detail" value="action_mask 标记哪些维度有效&#xa;例如: [1,1,1,1,1,1,1, 0,0,0,...]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="130" y="210" width="340" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- 迭代循环 -->
+        <mxCell id="loop-title" value="迭代循环 (i = 1 到 50)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="310" width="1000" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="loop-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;fontSize=14;fontStyle=1;opacity=20;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="1040" height="700" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤1: 计算时间步 -->
+        <mxCell id="step1-bg" value="步骤 1: 计算当前时间步" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="390" width="300" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step1-formula1" value="t = i / N" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="420" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step1-example" value="例如:&#xa;i=0  → t=0.00 (纯噪声)&#xa;i=25 → t=0.50 (一半清晰)&#xa;i=50 → t=1.00 (完全清晰)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="140" y="440" width="260" height="45" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤2: 时间嵌入 -->
+        <mxCell id="step2-bg" value="步骤 2: 生成时间嵌入" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="390" width="300" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step2-formula1" value="time_index = int(t × 1000)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="420" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step2-formula2" value="time_emb = SinusoidalPE(time_index)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="480" y="445" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step2-detail" value="输出: [B, 896] 时间特征向量" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="480" y="465" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤3: 动作编码 -->
+        <mxCell id="step3-bg" value="步骤 3: 编码当前动作" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="390" width="280" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step3-mask" value="action_masked = action × action_mask" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="820" y="420" width="240" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step3-encode" value="action_tokens = ActionEncoder(&#xa;  action_masked, embodiment_id&#xa;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="820" y="445" width="240" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤4: Transformer处理 -->
+        <mxCell id="step4-bg" value="步骤 4: Transformer 处理 (8层)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="520" width="960" height="260" as="geometry"/>
+        </mxCell>
+
+        <!-- Transformer层详细 -->
+        <mxCell id="transformer-layer" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="150" y="560" width="900" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="layer-title" value="每一层 Transformer Block" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="565" width="900" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Cross Attention -->
+        <mxCell id="cross-attn-box" value="Cross-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="600" width="380" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cross-attn-detail" value="Query: action_tokens [B, 50, 896]&#xa;Key/Value: context_tokens [B, N+1, 896]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="190" y="610" width="360" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Add Time Emb -->
+        <mxCell id="add-time-box" value="+ Time Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="600" width="420" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="add-time-detail" value="x = x + time_emb.unsqueeze(1)&#xa;广播到序列维度" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="600" y="610" width="400" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Feed Forward -->
+        <mxCell id="ffn-box" value="Feed-Forward Network" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="670" width="830" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ffn-detail" value="x = x + MLP(LayerNorm(x))&#xa;MLP: Linear(896→3584) → GELU → Linear(3584→896)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="190" y="680" width="810" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- 8层重复 -->
+        <mxCell id="repeat-note" value="× 8 层重复" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=2;fontColor=#CC0000;" vertex="1" parent="1">
+          <mxGeometry x="150" y="730" width="900" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤5: 序列池化 -->
+        <mxCell id="step5-bg" value="步骤 5: 序列池化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="810" width="450" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step5-flatten" value="x_flat = x.reshape(B, -1)  # [B, 50×896]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="140" y="840" width="410" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step5-pool" value="x_pooled = Linear(44800, 896)(x_flat)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="140" y="865" width="410" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step5-output" value="输出: [B, 896]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="885" width="410" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤6: MLP预测 -->
+        <mxCell id="step6-bg" value="步骤 6: 预测速度" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="810" width="450" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step6-mlp" value="velocity = MLPHead(x_pooled, embodiment_id)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="650" y="840" width="410" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step6-detail" value="Linear(896→1024) → ReLU → Linear(1024→1200)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="650" y="865" width="410" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step6-output" value="输出: [B, 1200] (50×24)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="885" width="410" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 步骤7: 更新动作 -->
+        <mxCell id="step7-bg" value="步骤 7: 更新动作 (Flow Matching)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="940" width="960" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step7-formula" value="action = action + dt × velocity" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontFamily=Courier New;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="140" y="970" width="920" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step7-dt" value="dt = 1/N = 1/50 = 0.02" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="140" y="1000" width="920" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="step7-explain" value="逐步从噪声朝着真实动作方向移动" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="140" y="1015" width="920" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 循环结束条件 -->
+        <mxCell id="loop-end" value="重复直到 i = N (50步)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="1070" width="400" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 最终输出 -->
+        <mxCell id="output-bg" value="最终输出" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="1160" width="1000" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="output-action" value="精确的动作序列 [B, 50, 24]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="350" y="1200" width="500" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="output-note" value="经过50步迭代，从随机噪声变成了可执行的精确动作!" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=2;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1250" width="800" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 右侧可视化 -->
+        <mxCell id="viz-bg" value="迭代可视化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="100" width="340" height="900" as="geometry"/>
+        </mxCell>
+
+        <!-- 迭代步骤可视化 -->
+        <mxCell id="viz-step0" value="i=0 (t=0.00)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="150" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="viz-step0-text" value="纯随机噪声&#xa;[0.83, -0.61, 0.24, ...]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="155" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="viz-arrow1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC0000;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1370" y="200" as="sourcePoint"/>
+            <mxPoint x="1370" y="240" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="viz-step10" value="i=10 (t=0.20)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="250" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="viz-step10-text" value="开始有形状&#xa;[0.68, -0.42, 0.18, ...]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="255" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="viz-arrow2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC6600;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1370" y="300" as="sourcePoint"/>
+            <mxPoint x="1370" y="340" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="viz-step25" value="i=25 (t=0.50)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="350" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="viz-step25-text" value="一半清晰&#xa;[0.35, -0.18, 0.12, ...]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="355" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="viz-arrow3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CCCC00;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1370" y="400" as="sourcePoint"/>
+            <mxPoint x="1370" y="440" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="viz-step40" value="i=40 (t=0.80)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="450" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="viz-step40-text" value="接近真实&#xa;[0.12, -0.05, 0.08, ...]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="455" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="viz-arrow4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#00CC00;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1370" y="500" as="sourcePoint"/>
+            <mxPoint x="1370" y="540" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="viz-step50" value="i=50 (t=1.00)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="550" width="280" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="viz-step50-text" value="精确动作&#xa;[0.02, 0.01, 0.03, ...]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontFamily=Courier New;fontStyle=1;fontColor=#006600;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="555" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- 关键参数 -->
+        <mxCell id="params-title" value="关键参数" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="620" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="param1" value="N = 50 (迭代步数)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="655" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="param2" value="dt = 1/N = 0.02" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="680" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="param3" value="action_dim = 1200 (50×24)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="705" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="param4" value="embed_dim = 896" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="730" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="param5" value="num_layers = 8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="755" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 公式说明 -->
+        <mxCell id="formula-title" value="核心公式" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="800" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="formula1" value="训练时:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="835" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="formula1-eq" value="a_t = (1-t)×noise + t×a_gt" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="855" width="250" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="formula1-loss" value="loss = MSE(v_pred, a_gt - noise)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="875" width="250" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="formula2" value="推理时:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="905" width="260" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="formula2-eq" value="a_{i+1} = a_i + dt × v_pred" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="925" width="250" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="formula2-note" value="v_pred = model(a_i, context, t)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="945" width="250" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- 连接线 -->
+        <mxCell id="conn1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#0066CC;" edge="1" parent="1" source="init-mask" target="step1-bg">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint"/>
+            <mxPoint x="650" y="350" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="300" y="320"/>
+              <mxPoint x="195" y="320"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn2" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="step1-bg" target="step2-bg">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint"/>
+            <mxPoint x="650" y="450" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn3" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="step2-bg" target="step3-bg">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint"/>
+            <mxPoint x="650" y="450" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#CC00CC;" edge="1" parent="1" source="step3-bg" target="step4-bg">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint"/>
+            <mxPoint x="650" y="450" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn5" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#9900CC;" edge="1" parent="1" source="step2-bg" target="step4-bg">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint"/>
+            <mxPoint x="650" y="450" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
